@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+		.div-all {
+			margin: 100px;
+		}
+
+		.slider {
+		  margin: 15px 0 40px 0;
+		}
+
+		.slider-handle {
+			background-image: linear-gradient(to right, #4c5351 0%, #d94442 100%) !important;
+		}
+
+		.div-input {
+			text-align: left;
+			width: 200px;
+			margin: 0 auto;
+		}
+
+	  h3 {
+	    font-size: 1.2em !important;
+	    margin-bottom: -2px !important;
+	  }
+
+	  #div-result {
+	    width: 120px;
+	    height: 100px;
+	    border: 1px solid;
+	    font-size: 50px;
+	    text-align: center;
+	    vertical-align: middle;
+	    line-height: 100px;
+	    margin: 0 auto;
+			padding: 0 15px;
+	  }
+  </style>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"> </script>
+
+  <script>
+    _u = _.noConflict();
+  </script>
+</head>
+<body>
+<script>
+	function calculate(metrics)
+	{
+		var height =  Number($( "#height" )[0].value);
+		var weight = Number($( "#weight" )[0].value);
+		$('#heightv').text(150 + height * 2.5);
+		$('#weightv').text(40 + weight * 2.5);
+
+		var table = [			// 0: N/A	1: M	2: L	3: XL
+			[0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 0, 0, 0, 0],
+			[0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2],
+			[0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2],
+			[1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2],
+			[1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3],
+			[0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3],
+			[0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+			[0, 0, 0, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3],
+			[0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+			[0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3]
+		];
+		var res_str = ["N/A", "M", "L", "XL"];
+		var res = table[height][weight];
+
+		document.getElementById('div-result').innerHTML = res_str[res];
+	}
+</script>
+
+<div class="div-all">
+	<div class="div-input">
+		<h3>Height: <span id="heightv">150</span> cm</h3>
+		<input id="height" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="9" data-slider-step="1" data-slider-value="0" />
+		<h3>Weight: <span id="weightv">40</span> kg</h3>
+		<input id="weight" data-slider-id='ex2Slider' type="text" data-slider-min="0" data-slider-max="13" data-slider-step="1" data-slider-value="0" />
+		<h3 style="text-align:center;">Your size:</h3>
+	</div>
+	<div id="div-result" style="margin-top: 12px;">N/A</div>
+</div>
+
+
+<script type="text/javascript">
+    $('#height').slider({
+        tooltip: 'always',
+    }).on('change', () => calculate(false));
+    $('#weight').slider({
+        tooltip: 'always'
+    }).on('change', () => calculate(false));
+    $('#hips').slider({
+        tooltip: 'always'
+    }).on('change', () => calculate(false));
+</script>
+
+</body>
+</html>
